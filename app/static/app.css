@@ -1,0 +1,25 @@
+.span3 {  
+    max-height: 500px !important;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+input {
+    background-color: transparent;
+    border: 0px solid;
+}
+
+
+.userinput {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid red;
+    text-align: center;
+    
+}
+
+
+input[type=text]:focus {
+    background-color: lightblue;
+}

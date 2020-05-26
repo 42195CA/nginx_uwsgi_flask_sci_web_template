@@ -1,0 +1,65 @@
+<!-- Write your comments here -->
+<!doctype html>
+<html>
+
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" rel="stylesheet" />
+	<!-- bootstrap css library and my css file -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='app.css')}}" /> </head>
+<body>
+
+	<!-- layout, header, file, filter and plot -->
+	<div class="container bg-light">
+		<div class="row">
+			<div class="col-sm-9 page-header "> {% block header %}{% endblock %} </div>
+			
+		</div>
+		<hr style="margin-bottom:5px !important; margin-top:5px !important; " />
+		<!-- row-->
+		<div class="row">
+			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"> 
+        			<a class="nav-link active" id="step_1" data-toggle="pill" href="#step_1_content" role="tab" aria-controls="step_1" aria-selected="true">Step 1: Upload Data</a> 
+        			<a class="nav-link disabled " id="step_2" data-toggle="pill" href="#step_2_content" role="tab" aria-controls="step_2" aria-selected="false">Step 2: Review Data</a> 
+        			<a class="nav-link disabled" id="step_3" data-toggle="pill" href="#step_3_content" role="tab" aria-controls="step_3" aria-selected="false">Step 3: Plot Data</a> 
+        			<a class="nav-link disabled" id="step_4" data-toggle="pill" href="#step_4_content" role="tab" aria-controls="step_4" aria-selected="false">Step 4: Predict C1000</a>
+				<div class="input-group-append"> <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#plotOptions" aria-expanded="false" aria-controls="plotOptions"> Plot Options  </button> </div> {% block plot_ortion_zone %}{% endblock %} </div>
+			<!-- div class="nav flex-column nav-pills" id="v-pills-tab" -->
+			<div class="tab-content col-sm-9 " id="v-pills-tabContent">
+				<div class="tab-pane fade show active" id="step_1_content" role="tabpanel" aria-labelledby="step_1">{% block step_1_content %}{% endblock %}</div>
+				<div class="tab-pane fade" id="step_2_content" role="tabpanel" aria-labelledby="step_2">{% block step_2_content %}{% endblock %}</div>
+				<div class="tab-pane fade" id="step_3_content" role="tabpanel" aria-labelledby="step_3">{% block step_3_content %}{% endblock %}</div>
+				<div class="tab-pane fade" id="step_4_content" role="tabpanel" aria-labelledby="step_4">{% block step_4_content %}{% endblock %}</div>
+			</div>
+			<!-- div class="tab-content" id="v-pills-tabContent"-->
+		</div>
+		<!-- row-->
+	</div>	<!-- <div class="container bg-light">-->
+
+
+
+
+	<!-- JQuery  library-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+	<script src="{{url_for('static', filename='app.js')}}"></script>
+</body>
+
+</html>

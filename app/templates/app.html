@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block title %}Web Weibull Analysis Tool{% endblock %}
+
+{% block header %}
+<h2><font color="purple">Web-based Weibull Analysis, Prediction and Plot Tool</font></h2>
+{% endblock %}
+
+
+{% block step_1_content %}
+<form class="form-inline" id="upload-file-form"  method=post enctype=multipart/form-data>
+<div class="input-group sm-3">
+<label class="custom-file">
+  <label class="custom-file-label" for="choosefile">Choose file</label>
+  <input type="file" id="choosefile" class="custom-file-input" name="file">
+  <span class="custom-file-control"></span>
+</label>
+</div>
+</form>
+<hr style="margin-bottom:5px !important; margin-top:5px !important; " />
+
+<div class="row">
+    <div class="col-sm-6">
+      <h4> <span class="badge badge-secondary">Tips:prepare your data file</span></h4>
+      <ul style="list-style-type:disc">
+          <li class="list-group-item">* Allowed file types: MS Excel .xlsx, csv (seperated by ,) and txt (seperated by tab) </li>
+          <li class="list-group-item">* Prepare Data like the example on the right, note: it must be the FIRST worksheet if xlsx and csv are used</li>
+          <li class="list-group-item">* Frist row has two values, x data type and y data type</li>
+          <li class="list-group-item">* Second row is data header</li>
+          <li class="list-group-item">* First column is time-related data, such as week-in-service, month-in-service, year-in-service, mileage-in-service</li>          
+          <li class="list-group-item">* Other columns are C/1000 or EPUS values of each program which you plan to plot, Numerical data only</li>
+      </ul>
+    </div>
+    <div class="col-sm-6">
+      <img src="{{url_for('static', filename='example_txt.png')}}" alt="Example of Txt Input File" height="100"/>
+      <img src="{{url_for('static', filename='example_xlsx.png')}}" alt="Example of CSV/XLSX Input File" height="400"/>
+    </div>
+</div>
+{% endblock %}  
+   
+{% block step_2_content %}
+After you review the data, please click step 3 tab on the left or this button <button type="button" class="btn btn-primary" id="clickstep3button">Step 3: Plot Data</button>.  
+<div class="span3" id="step_2_content_table">
+</div>
+{% endblock %}
+
+{% block plot_ortion_zone %}
+ <div class="collapse" id="plotOptions">
+  <div class="card card-body">
+
+<div class="form-group" id="plot-options-setup">   
+    <!--- checkbox task -->
+    <label class="input-group-text" for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="Mileage vs C1000" value="C1000 vs Something">
+ 
+    <label class="input-group-text" for="titlesize">Title size</label>
+    <input type="number" class="form-control" min="5" max="25" id="titlesize" value="15">
+    
+    <label class="input-group-text" for="xlabel">X-label</label>
+    <input type="text" class="form-control" id="xlabel" placeholder="MIS"  value="MIS">
+
+    <label class="input-group-text" for="ylabel">Y-label</label>
+    <input type="text" class="form-control" id="ylabel" placeholder="C1000"  value="C1000">
+
+    <label class="input-group-text" for="labelsize">Label size</label>
+    <input type="number" class="form-control"  min="5" max="20" id="labelsize"  value="12">
+
+    <label class="input-group-text" for="legendsize">Legend size</label>
+    <input type="number" class="form-control"  min="5" max="20" id="legendsize"  value="10">
+
+    <label class="input-group-text" for="legendposition">Legend position</label>
+    <select class="form-control" id="legendposition">
+        <option>best</option>
+        <option>upper right</option>
+        <option>upper left</option>
+        <option>lower left</option>
+        <option> lower right </option>
+        <option> right </option>
+        <option> center left  </option>
+        <option> center right </option>
+        <option> lower center </option>
+        <option> upper center </option>
+        <option> center </option>
+    </select>   
+ 
+    <label class="input-group-text" for="xtick">X-ticks</label>
+    <input type="text" class="form-control" id="xtick" placeholder="" value="1,2,5,10,20,36,50,100,180">
+
+
+  <label class="input-group-text" for="xtickrotation">X-ticks Rotation</label>
+    <select class="form-control" id="xtickrotation">
+        <option>0</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+        <option>25</option>
+        <option>30</option>
+        <option>35</option>
+        <option>40</option>
+        <option>45</option>
+        <option>50</option>
+        <option>55</option>
+        <option>60</option>
+        <option>65</option>
+        <option>70</option>
+        <option>75</option>
+        <option>80</option>
+        <option>85</option>
+        <option>90</option>
+    </select>   
+
+    <label class="input-group-text" for="ytick">Y-ticks</label>
+    <input type="text" class="form-control" id="ytick" placeholder="" value="    ">
+  
+    <label class="input-group-text" for="linewidth">Line width</label>
+    <input type="number" class="form-control"  min="1" max="10" id="linewidth"  value="1">
+        
+    <label class="input-group-text" for="markdersize">Marker size</label>
+    <input type="number" class="form-control"  min="1" max="6"  step="0.5" id="markdersize"  value="4">     
+   
+</div>    <!--- end  1st div -->
+</div> <!--- end  card -->
+</div> <!--- end  plotOption -->
+{% endblock %}
+
+
+{% block step_3_content %}
+<div class="form-inline">
+<label for="programlist_multiselect">Choose programs:</label><br/>
+<select class="selectpicker" name="programlist_multiselect" id="programlist_multiselect"  multiple="multiple" class="form-control" data-live-search="true"> </select>
+<div class="input-group-append">  <button type="button" class="btn btn-primary" id="plot">Plot</button>  </div>
+</div>
+<div id="plotZone"> </div>
+{% endblock %} 
+
+
+{% block step_4_content %}
+<form>
+    <div class="form-inline">
+             <span>Choose Programs, data range (start,end) for fitting,  and predict <input type="text" id="show_data_y_name" placeholder="C1000"  value="C1000" maxlength="5" size="5">  at estimated <input type="text" class=" userinput" min="1"  id="inputestX" maxlength="6" size="6" value="36"> <input type="text" id="show_data_x_name" placeholder="MIS"  value="MIS" maxlength="5" size="5">  </span>
+</form>
+
+<div class="span3 col-sm-12" id="step_4_content_table">
+ <!-- <table data-toggle="table table-striped" id="programsummary">-->
+<table class="table table-striped" id="programsummary">
+<thead>
+<tr>
+        <th scope="col">Select</th>
+        <th scope="col">Program</th>
+        <th scope="col">Start X</th>
+        <th scope="col">End X</th>
+        <th scope="col">1</th>
+        <th scope="col">2</th>
+        <th scope="col">Slope</th>
+        <th scope="col">Lambda</th>
+</tr>
+</thead>
+</table>
+</div>
+
+<div> 
+    <button type="button" class="btn btn-primary" id="predict">Fit, Predict and Plot</button>
+    <button type="button" class="btn btn-primary" id="download">Download Results</button> 
+</div>
+
+<div id="predictplotZone"> </div>
+{% endblock %} 
