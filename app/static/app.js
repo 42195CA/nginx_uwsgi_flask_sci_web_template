@@ -249,7 +249,7 @@ function plotFile(task) {
 		dataType: "json",
 		contentType: "application/json",
 		error: function () {
-			alert("plot error! Please modfiy parameters and try again.");
+			alert("plot error! Please modifiy parameters and try again.");
 			if (task == 'plot') {
 				$('#plotZone').find('img').remove();
 			}

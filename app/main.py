@@ -3,8 +3,8 @@
 #  templates folder: layout.html (basic layout) and app.html
 #  Bootstrap CSS and jQuery (ajax) are used.
 #  Xiaoyang Liu
-#  March 20, 2018
-#  Xiaoyang.Liu1@fcagroup.com
+#  March 22, 2022
+#  xiaoyang.liu@gmail.com
 #
 # run this app in command 
 #  $export FLASK_APP=weibull_app.py
@@ -27,7 +27,7 @@
 # make xlabel of mile  and km to be (x1000)
 # remove non-numeric data and fill them with NaN
 
-# 5/8/20202 changes 
+# 5/8/2020 changes
 # work with GITHUB and VSCode
 
 from compute import listdata, plotdata
@@ -41,14 +41,14 @@ import pandas as pd
 app = Flask(__name__)
 
 # set up environment, local development Ubuntu, pythonanywhere, The difference is the app path folder
-env="local"
-if env=="local":
+env = "local"
+if env == "local":
     UPLOAD_DIR = 'uploads/'
     app.config['UPLOAD_FOLDER'] = UPLOAD_DIR
     app.secret_key = 'MySecretKey'
     if not os.path.isdir(UPLOAD_DIR):
         os.mkdir(UPLOAD_DIR)
-elif env=="pythonanywhere":
+elif env == "pythonanywhere":
     UPLOAD_DIR = 'mysite/uploads/'
     app.config['UPLOAD_FOLDER'] = UPLOAD_DIR
     app.secret_key = 'MySecretKey'
@@ -56,22 +56,22 @@ elif env=="pythonanywhere":
         os.makedirs(UPLOAD_DIR)   
    
 # Allowed file types for file upload
-ALLOWED_EXTENSIONS = set(['xlsx','txt','csv'])
+ALLOWED_EXTENSIONS = set(['xlsx', 'txt', 'csv'])
 def allowed_file(filename):
     """Does filename have the right extension?"""
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 #global vaiable; user loaded file name;
 fullfilename = ''
-df=pd.DataFrame()
+df = pd.DataFrame()
 
 # initial page, ajax request is based on this page without reloading full page
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods = ['GET', 'POST'])
 def index():
     return render_template("app.html")
 
 # upload *.xlsx file onto server upload foder, reade file content and return them back to front page
-@app.route('/upload',methods=['POST'])
+@app.route('/upload',methods = ['POST'])
 def upload_fun(): 
     global fullfilename
     global df
@@ -94,7 +94,8 @@ def upload_fun():
         data = listdata(fullfilename)  
 #       encode data into json format and send it back to front page
         data = json.loads(data)
-        return jsonify({"data":data})
+        pritn(data)
+        return jsonify({"data": data})
 
 # plot and predict
 @app.route('/plot',methods=['POST'])
@@ -105,9 +106,9 @@ def plot_fun():
     data = plotdata(fullfilename,param)
 #    encode data into json format and send it back to front page
     data = json.loads(data)
-    return  jsonify({"data":data})       
+    return  jsonify({"data": data})
 
        
 if __name__ == "__main__":
     # Only for debugging while developing
-    app.run(host="0.0.0.0", debug=True, port=80)
+    app.run(host="0.0.0.0", debug = True, port = 80 )

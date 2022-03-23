@@ -10,12 +10,12 @@ from flask import json
 from io import BytesIO
     
 #gloal variables 
-pmode='simple'   #true weibull algorithm is disabled.
+pmode = 'simple'   #true weibull algorithm is disabled.
 
 #transfrom data for linear regression in log-log curve
 def fdataX(x,pmode):
-    x=x[x>0]
-    x=x.dropna()
+    x = x[x>0]
+    x = x.dropna()
     if pmode=='simple':
     	return Series(x.values*0.001, index=x.index)
     else:
@@ -157,10 +157,10 @@ def plotdata(filename=None,param=None):
 
     global pmode
 #    plot options
-    pplot=param['plot']
-    title=pplot['title']
-    xlabel=pplot['xlabel']
-    ylabel=pplot['ylabel']
+    pplot = param['plot']
+    title = pplot['title']
+    xlabel = pplot['xlabel']
+    ylabel = pplot['ylabel']
     xtick = np.array([float(x) for x in pplot['xtick'].split(',')])
     ytick = np.array([float(x) for x in pplot['ytick'].split(',')])
     titlesize = float(pplot['titlesize'])
@@ -275,5 +275,18 @@ def plotdata(filename=None,param=None):
 
 if __name__ == "__main__":
     filename='uploads/Delmar_new.csv'
-    param={'datatype': 'C1000 vs MOP/MIS', 'model': 'weibull', 'task': 'predict', 'estX': 36, 'plot': {'xtick': '1,2,5,10,15,20,25,30,35,40', 'ytick': '0.1,0.2,0.5,1,2,5,10,20,50,70,100,200,500,999'}, 'program': {'BU 2015 Totals': {'pid': 0, 'selected': 1, 'minX': 1, 'maxX': 26}, 'BU 2016 Totals': {'pid': 1, 'selected': 0, 'minX': 2, 'maxX': 16}, 'BU 2017 Totals': {'pid': 2, 'selected': 0, 'minX': 3, 'maxX': 5}, 'VM 2015 Totals': {'pid': 3, 'selected': 0, 'minX': 4, 'maxX': 25}, 'VM 2016 Totals': {'pid': 4, 'selected': 1, 'minX': 5, 'maxX': 15}, 'VM 2017 Totals': {'pid': 5, 'selected': 0, 'minX': 1, 'maxX': 7}, 'FB 2016 Totals': {'pid': 6, 'selected': 1, 'minX': 2, 'maxX': 23}}}
-    plotdata(filename,param)
+    param={'title': 'titlename',
+           'datatype': 'C1000 vs MOP/MIS',
+           'model': 'weibull',
+           'task': 'predict',
+           'estX': 36,
+           'plot': {'xtick': '1,2,5,10,15,20,25,30,35,40', 'ytick': '0.1,0.2,0.5,1,2,5,10,20,50,70,100,200,500,999'},
+           'program': {'BU 2015 Totals': {'pid': 0, 'selected': 1, 'minX': 1, 'maxX': 26},
+                       'BU 2016 Totals': {'pid': 1, 'selected': 0, 'minX': 2, 'maxX': 16},
+                       'BU 2017 Totals': {'pid': 2, 'selected': 0, 'minX': 3, 'maxX': 5},
+                       'VM 2015 Totals': {'pid': 3, 'selected': 0, 'minX': 4, 'maxX': 25},
+                       'VM 2016 Totals': {'pid': 4, 'selected': 1, 'minX': 5, 'maxX': 15},
+                       'VM 2017 Totals': {'pid': 5, 'selected': 0, 'minX': 1, 'maxX': 7},
+                       'FB 2016 Totals': {'pid': 6, 'selected': 1, 'minX': 2, 'maxX': 23}}
+           }
+    plotdata(filename, param)
